@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logout</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #808080; /* Grey background */
+        }
+        .logout-button {
+            padding: 15px 30px;
+            background-image: linear-gradient(to right, #ff8a00, #e52e71);
+            border: none;
+            border-radius: 25px;
+            font-weight: bold;
+            color: #fff;
+            font-size: 18px;
+            cursor: pointer;
+            outline: none;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.1s, box-shadow 0.1s;
+        }
+        .logout-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+        }
+        .logout-button:active {
+            transform: scale(0.95);
+        }
+    </style>
+</head>
+<body>
+    <form action="{{ url_for('auth.login') }}" method="get">
+        <button type="submit" class="logout-button">Logout</button>
+    </form>
+</body>
+</html>
