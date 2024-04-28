@@ -1,11 +1,9 @@
 from flask import Flask, render_template, request, redirect, url_for, session
+from Controller.LoginController import handle_logout,handle_login
 from Controller.RegistrationController import handle_registration
-from Controller.LoginController import handle_login, handle_logout
-from flask_login import LoginManager, login_required
 
 app = Flask(__name__, template_folder='templates')
 app.secret_key = "d6g8"
-
 
 
 @app.route('/register', methods=['GET'])
@@ -15,6 +13,7 @@ def show_register():
 
 @app.route('/register', methods=['POST'])
 def post_register():
+
     return handle_registration()
 
 
@@ -35,13 +34,9 @@ def logout():
 
 @app.route('/logout', methods=['POST'])
 def logout_user():
+
     return handle_logout()
 
-
-@app.before_request
-def check_logged_in():
-    if request.endpoint != 'login' and 'logged_in' not in session:
-        return redirect(url_for('login'))
 
 
 if __name__ == '__main__':
