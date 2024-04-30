@@ -63,11 +63,10 @@
     <div class="page">
         <div class="box">
             <div class="log">Admin Login</div>
-            <form method="post" action="/admin/login"> <!-- Adjust the action URL as needed -->
-                <input type="text" name="username" placeholder="Username" required />
+            <form method="post" action="{{ url_for('adminlogin') }}"> <!-- Adjust the action URL as needed -->
+                <input type="text" name="email" placeholder="E-mail" required />
                 <input type="password" name="password" placeholder="Password" required />
-<img src="app/static/images/logos/FirstLogo.png" alt="Company Logo" />
-
+                    <img src="static/images/logos/FirstLogo.png" alt="Company Logo" />
                 <button type="submit" class="loginbutton">Login</button>
             </form>
         </div>

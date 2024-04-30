@@ -12,10 +12,34 @@ def handle_login():
         flash('Password is wrong')
         return redirect(url_for('login'))
     else:
-        response = make_response(render_template("logout.html", email=email))
-        response.set_cookie('email', email)
-        session['email'] = UserModel.check_user(email, password)
-        return response
+        emailChecked, is_admin = UserModel.check_user(email, password)
+        if is_admin:
+            return redirect(url_for('login'))
+        else:
+            response = make_response(render_template("logout.html", email=email))
+            response.set_cookie('email', emailChecked)
+            session['email'] = emailChecked
+            return response
+
+def handle_adminlogin():
+    email = request.form['email']
+    password = request.form['password']
+    if UserModel.check_user(email, password) == "ue":
+        flash('User does not exist')
+        return redirect(url_for('login'))
+    elif UserModel.check_user(email, password) == "pw":
+        flash('Password is wrong')
+        return redirect(url_for('login'))
+    else:
+        emailChecked, is_admin = UserModel.check_user(email, password)
+        if is_admin:
+            response = make_response(render_template("adminpanel.html", email=email))
+            response.set_cookie('email', emailChecked)
+            response.set_cookie("is_admin", "true")
+            session['email'] = emailChecked
+            return response
+        else:
+            return redirect(url_for('adminlogin'))
 
 
 

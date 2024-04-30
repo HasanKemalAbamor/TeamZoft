@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, session
-from Controller.LoginController import handle_logout,handle_login
+from Controller.LoginController import handle_logout,handle_login,handle_adminlogin
 from Controller.RegistrationController import handle_registration
 
 app = Flask(__name__, template_folder='templates')
@@ -34,8 +34,18 @@ def logout():
 
 @app.route('/logout', methods=['POST'])
 def logout_user():
-
     return handle_logout()
+
+
+@app.route('/adminlogin', methods=['GET'])
+def adminlogin():
+    return render_template("AdminLogin.html")
+
+
+@app.route('/adminlogin', methods=['POST'])
+def post_adminlogin():
+    return handle_adminlogin()
+
 
 
 

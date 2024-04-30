@@ -10,12 +10,15 @@ class UserModel:
         cursor = conn.cursor()
         cursor.execute("SELECT * FROM User WHERE email = ?", (email,))
         row = cursor.fetchone()
-        if row is not None:
+        if row is not None: # checks if user exist
             conn.commit()
             conn.close()
-            if row[4] == password:
-                return email
+            if row[4] == password: # checking the password
+                if row[5] == True: # checking the is_admin
+                    return email, True # user is admin
+                else:
+                    return email, False #user is not admin
             else:
-                return "pw"
+                return "pw" # password is wrong
         else:
-            return "ue"
+            return "ue" # user does not exist
