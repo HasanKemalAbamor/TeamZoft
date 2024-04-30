@@ -3,12 +3,6 @@ from flask import request, redirect, url_for, flash, render_template
 from Model.AddUser import UserModel
 
 
-def show_registration_form():
-    """Render the registration form template on GET request."""
-    return render_template('Registration.html')
-
-
-
 def handle_registration():
     """Process the submitted registration form data on POST request."""
     # Process the submitted form data
