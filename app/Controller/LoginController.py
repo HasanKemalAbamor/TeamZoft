@@ -33,7 +33,7 @@ def handle_adminlogin():
     else:
         emailChecked, is_admin = UserModel.check_user(email, password)
         if is_admin:
-            response = make_response(render_template("adminpanel.html", email=email))
+            response = make_response(render_template("AdminPanel.html", email=email))
             response.set_cookie('email', emailChecked)
             response.set_cookie("is_admin", "true")
             session['email'] = emailChecked

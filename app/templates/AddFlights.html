@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Metadata and Stylesheets -->
+    <link href="https://fonts.googleapis.com/css?family=Kanit" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+    <style>
+        /* Your existing styles... */
+        body { background-color: #272727; display: flex; }
+        .page { width: 1920px; height: 1080px; }
+        /* Other styles */
+    </style>
+</head>
+<body>
+    <div class="page">
+        <div class="box">
+            <div class="adminpaneltxt">admin panel</div>
+                    <img src="static/images/logos/FirstLogo.png" alt="Company Logo" />
+            <form action="{{ url_for('route_add_flight') }}" method="post">
+                <button type="submit" class="addFlightsbutton">Add Flight</button>
+            </form>
+            <form action="{{ url_for('view_flights') }}">
+                <button type="submit" class="viewbutton">View Flights</button>
+            </form>
+            <a href="{{ url_for('logout') }}" class="logoutbutton">Logout</a>
+        </div>
+        <div class="addbox">
+            <div class="addflighttxt">add flight</div>
+            <form action="{{ url_for('route_add_flight') }}" method="post">
+                <input type="text" name="airline_company" placeholder="AIRLINE COMPANY">
+                <input type="text" name="departure" placeholder="DEPARTURE">
+                <input type="text" name="destination" placeholder="DESTINATION">
+                <input type="date" name="date">
+                <input type="time" name="time">
+                <button type="submit" class="addbutton">Add</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
