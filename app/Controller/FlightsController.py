@@ -23,9 +23,8 @@ def handle_searchFlight():
     departure = request.form['departure']
     destination = request.form['destination']
     dateL = request.form['datelowerboundary']
-    dateU = request.form['dateupperboundary']
 
-    data = FlightModel.check_flight(departure, destination, dateL.split("-")[0],dateL.split("-")[1],dateL.split("-")[2],dateU.split("-")[0], dateU.split("-")[1],dateU.split("-")[2])
+    data = FlightModel.check_flight(departure, destination, dateL.split("-")[0],dateL.split("-")[1],dateL.split("-")[2])
     email = request.cookies.get('email')
     response = make_response(render_template("viewFlights.html", data=data))
     response.set_cookie('email', email)

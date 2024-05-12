@@ -72,6 +72,8 @@
         color: #818181;
         font-size: 24px;
         position: relative;
+          margin-left: 140px;
+          margin-top: 530px;
       }
       .filter{
           display: flex;
@@ -115,11 +117,11 @@
         <div class="box">
           <div class="adminpaneltxt">admin panel</div>
           <img src="static/images/logos/FirstLogo.png" alt="Company Logo" />
-            <form><button class="addFlightsbutton">Add Flight</button></form>
+            <form action="{{ url_for('addflight') }}" ><button class="addFlightsbutton">Add Flight</button></form>
 
-            <form><button class="addFlightsbutton">View Flights</button></form>
+            <form action="{{ url_for('viewflights') }}" ><button class="addFlightsbutton">View Flights</button></form>
 
-            <form><button class="logoutbutton">Logout</button></form>
+            <form action="{{ url_for('adminlogin') }}" ><button class="logoutbutton">Logout</button></form>
 
         </div>
         <div class="addbox">
@@ -128,34 +130,55 @@
           <input type="text" class="options" name="departure" placeholder="DEPARTURE" />
           <input type="text" class="options" name="destination" placeholder="DESTINATION" />
           <input type="date" class="options" name="datelowerboundary" />
-          <input type="date" class="options" name="dateupperboundary" />
           <button type="submit" class="addbutton">Search</button>
             </form>
             </div>
-        <div class="list">
-            <ul id="data-list" class="list"></ul>
-            <script>
+            <div class="list">
+                <ul id="data-list" class="list"></ul>
+                <script>
 
-                window.data = {{ data | tojson }};
-                let flightList=data
+                    window.data = {{ data | tojson }};
+                    let flightList=data
 
-                const dataList = document.getElementById('data-list');
+                    const dataList = document.getElementById('data-list');
 
-                data.forEach(list)
-                function list(e){
-                    const listItem = document.createElement('li');
-                    listItem.style.color="white";
-                    listItem.style.backgroundColor="#232323";
-                    listItem.style.borderRadius="10px"
-                    listItem.style.padding="10px";
-                    listItem.style.margin="5px"
+                    data.forEach(list)
+                    function list(e){
+                        const listItem = document.createElement('li');
+                        listItem.style.display="flex"
+                        listItem.style.height="130px"
+                        listItem.style.color="white";
+                        listItem.style.backgroundColor="#232323";
+                        listItem.style.borderRadius="10px"
+                        listItem.style.padding="3px";
+                        listItem.style.margin="20px"
+                        const l1 = document.createElement("div");
+                        l1.style.flex="1"
+                        const l1h1 = document.createElement("h3");
+                        l1h1.style.color="#606060"
+                        l1h1.textContent=e[0];
+                        const l1h2 = document.createElement("h3");
+                        l1h2.style.color="#606060"
+                        l1h2.textContent=e[5]+"/"+e[4]+"/"+e[3];
+                        const l1h3 = document.createElement("h3");
+                        l1h3.style.color="#606060"
+                        l1h3.textContent=e[6]+":"+e[7];
+                        l1.appendChild(l1h1);
+                        l1.appendChild(l1h2);
+                        l1.appendChild(l1h3);
+                        const l2 = document.createElement("div");
+                        l2.style.flex="1"
+                        const l2h = document.createElement("h3");
+                        l2h.style.color="#606060"
+                        l2h.textContent=e[1]+" > "+e[2]
+                        l2.appendChild(l2h);
+                        listItem.appendChild(l1);
+                        listItem.appendChild(l2);
+                        dataList.appendChild(listItem);
+                    }
 
-                    listItem.textContent = "Company: "+e[0]+" Departure: "+e[1]+" Destination: "+e[2]+" Date:"+e[5]+"/"+e[4]+"/"+e[3]+" Time: "+ e[6]+":"+e[7];
-                    dataList.appendChild(listItem);
-                }
-
-            </script>
-        </div>
+                </script>
+            </div>
         </div>
       </div>
     </body>
