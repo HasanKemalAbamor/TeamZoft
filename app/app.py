@@ -1,8 +1,10 @@
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, redirect, url_for, session, make_response
 
-from Controller.FlightsController import handle_addFlight, handle_searchFlight
+from Controller.FlightsController import handle_addFlight, handle_searchFlight, handle_userFlight
 from Controller.LoginController import handle_logout,handle_login,handle_adminlogin
 from Controller.RegistrationController import handle_registration
+from Model.RemoveFlight import DeleteFlightModel
+from Model.CheckLogout import CheckUserModel
 
 app = Flask(__name__, template_folder='templates')
 app.secret_key = "d6g8"
@@ -10,7 +12,9 @@ app.secret_key = "d6g8"
 
 @app.route('/register', methods=['GET'])
 def show_register():
-    return render_template('Registration.html')
+    response = make_response(render_template('Registration.html'))
+    response.set_cookie('email', '', expires=0)
+    return response
 
 
 @app.route('/register', methods=['POST'])
@@ -21,7 +25,9 @@ def post_register():
 
 @app.route('/login', methods=['GET'])
 def login():
-    return render_template("login.html")
+    response = make_response(render_template("login.html"))
+    response.set_cookie('email', '', expires=0)
+    return response
 
 
 @app.route('/login', methods=['POST'])
@@ -41,11 +47,14 @@ def logout_user():
 
 @app.route('/adminlogin', methods=['GET'])
 def adminlogin():
-    return render_template("AdminLogin.html")
+    response = make_response(render_template("AdminLogin.html"))
+    response.set_cookie('email', '', expires=0)
+    return response
 
 
 @app.route('/adminlogin', methods=['POST'])
 def post_adminlogin():
+
     return handle_adminlogin()
 
 
@@ -58,24 +67,67 @@ def adminPanel():
 
 @app.route('/addflight', methods=['GET'])
 def addflight():
-    return render_template("addFlight.html")
+    email= request.cookies.get("email")
+    if CheckUserModel.check_admin(email):
+        return render_template("addFlight.html")
+    else:
+        return redirect("adminlogin")
+
 
 
 
 @app.route('/addflight', methods=['POST'])
 def post_addflight():
-    return handle_addFlight()
-
+    email = request.cookies.get("email")
+    if CheckUserModel.check_admin(email):
+        return handle_addFlight()
+    else:
+        return redirect("adminlogin")
 
 @app.route('/viewflights', methods=['GET'])
 def viewflights():
-    return render_template("viewFlights.html",data ="")
+    email = request.cookies.get("email")
+    if CheckUserModel.check_admin(email):
+        return handle_searchFlight()
+    else:
+        return redirect("adminlogin")
+@app.route('/flight_details/<int:flight_id>')
+def flight_details(flight_id):
+    email = request.cookies.get("email")
+    if CheckUserModel.check_admin(email):
+        DeleteFlightModel.delete_flight(flight_id)
+        return redirect("/adminpanel")
+    else:
+        return redirect("adminlogin")
+
+@app.route('/userpanel', methods=['GET'])
+def userpanel():
+    email = request.cookies.get("email")
+    if CheckUserModel.check_user(email):
+        return render_template("Logout.html",data ="")
+    else:
+        return redirect("login")
 
 
 
-@app.route('/viewflights', methods=['POST'])
-def post_viewflights():
-    return handle_searchFlight()
+@app.route('/userFlights', methods=['GET'])
+def userFlights():
+    email = request.cookies.get("email")
+    if CheckUserModel.check_user(email):
+        return render_template("userFlights.html",data ="")
+    else:
+        return redirect("login")
+
+@app.route('/userFlights', methods=['POST'])
+def post_userFlights():
+    email = request.cookies.get("email")
+    if CheckUserModel.check_user(email):
+        return handle_userFlight()
+    else:
+        return redirect("login")
+
+
+
 
 
 

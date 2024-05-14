@@ -96,7 +96,6 @@
         top: 160px;
       }
       .list{
-          padding-top: 10px;
           list-style-type: none;
       }
       input {
@@ -116,16 +115,23 @@
     <body>
       <div class="page">
         <div class="box">
-          <div class="adminpaneltxt">admin panel</div>
+          <div class="adminpaneltxt">user panel</div>
           <img src="static/images/logos/FirstLogo.png" alt="Company Logo" />
-            <form action="{{ url_for('addflight') }}" ><button class="addFlightsbutton">Add Flight</button></form>
 
-            <form action="{{ url_for('viewflights') }}" ><button class="addFlightsbutton">View Flights</button></form>
+            <form action="{{ url_for('userFlights') }}" ><button class="addFlightsbutton">View Flights</button></form>
 
-            <form action="{{ url_for('adminlogin') }}" ><button class="logoutbutton">Logout</button></form>
+            <form action="{{ url_for('login') }}" ><button class="logoutbutton">Logout</button></form>
 
         </div>
         <div class="addbox">
+            <div >
+                <form method="post" class="filter" action="{{ url_for('post_userFlights') }}">
+          <input type="text" class="options" name="departure" placeholder="DEPARTURE" />
+          <input type="text" class="options" name="destination" placeholder="DESTINATION" />
+          <input type="date" class="options" name="datelowerboundary" />
+          <button type="submit" class="addbutton">Search</button>
+            </form>
+            </div>
             <div class="list">
                 <ul id="data-list" class="list"></ul>
                 <script>
@@ -167,14 +173,6 @@
                         l2.appendChild(l2h);
                         listItem.appendChild(l1);
                         listItem.appendChild(l2);
-                        const button = document.createElement('button');
-                        button.textContent = "Remove Flight";
-                        button.style.marginLeft = "10px";
-                        button.onclick = function() {
-                            // Redirect to the URL with the flight ID
-                            window.location.href = `/flight_details/${e[8]}`;
-                        };
-                        listItem.appendChild(button);
                         dataList.appendChild(listItem);
                     }
 
