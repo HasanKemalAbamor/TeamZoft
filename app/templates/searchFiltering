@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Search Flight</title>
+    <style>
+      .list-item {
+        display: flex;
+        height: 130px;
+        color: white;
+        background-color: #232323;
+        border-radius: 10px;
+        padding: 3px;
+        margin: 20px;
+      }
+      .list-item > div {
+        flex: 1;
+      }
+      .list-item h3 {
+        color: #606060;
+      }
+    </style>
+  </head>
+  <body>
+    <form id="searchForm">
+      <label for="departure">Departure:</label>
+      <input
+        type="text"
+        id="departure"
+        name="departure"
+        placeholder="Departure"
+      />
+      <label for="destination">Destination:</label>
+      <input
+        type="text"
+        id="destination"
+        name="destination"
+        placeholder="Destination"
+      />
+      <label for="date">Date:</label>
+      <input type="date" id="date" name="date" />
+      <button type="button" id="searchButton">Search Flight</button>
+    </form>
+
+    <ul id="data-list"></ul>
+
+    <script>
+      const flights = {{ data | tojson }};
+
+      const dataList = document.getElementById('data-list');
+
+
+      const searchForm = document.getElementById('searchForm');
+      const searchButton = document.getElementById('searchButton');
+      searchButton.addEventListener('click', function(event) {
+          event.preventDefault();
+
+
+          const departure = document.getElementById('departure').value.toLowerCase();
+          const destination = document.getElementById('destination').value.toLowerCase();
+          const date = document.getElementById('date').value;
+
+          const filteredFlights = flights.filter(function(flight) {
+              return flight.departure.toLowerCase().includes(departure) &&
+                     flight.destination.toLowerCase().includes(destination) &&
+                     flight.date === date;
+          });
+
+          displayFlights(filteredFlights);
+      });
+
+
+      function displayFlights(flights) {
+
+          dataList.innerHTML = '';
+
+
+          flights.forEach(function(flight) {
+              const listItem = document.createElement('li');
+              listItem.classList.add('list-item');
+              listItem.innerHTML = `
+                  <div>
+                      <h3>${flight.departure}</h3>
+                      <h3>${flight.destination}</h3>
+                      <h3>${flight.date}</h3>
+                  </div>
+                  <div>
+                      <h3>${flight.time}</h3>
+                  </div>
+
+              `;
+              dataList.appendChild(listItem);
+          });
+      }
+    </script>
+  </body>
+</html>
