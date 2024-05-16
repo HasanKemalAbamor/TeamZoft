@@ -39,7 +39,7 @@
         height: 880px;
         background-color: #3c3c3c;
         border-radius: 25px;
-        margin-left: 700px;
+        margin-left: 550px;
         margin-top: -880px;
       }
       .addFlightsbutton {
@@ -98,6 +98,8 @@
       .list{
           padding-top: 10px;
           list-style-type: none;
+          height: 800px;
+          overflow-y: auto;
       }
       input {
         width: 100px;
@@ -126,15 +128,13 @@
 
         </div>
         <div class="addbox">
-            <div class="list">
+            <div>
                 <ul id="data-list" class="list"></ul>
                 <script>
 
                     window.data = {{ data | tojson }};
                     let flightList=data
-
                     const dataList = document.getElementById('data-list');
-
                     data.forEach(list)
                     function list(e){
                         const listItem = document.createElement('li');
@@ -161,19 +161,34 @@
                         l1.appendChild(l1h3);
                         const l2 = document.createElement("div");
                         l2.style.flex="1"
-                        const l2h = document.createElement("h3");
-                        l2h.style.color="#606060"
-                        l2h.textContent=e[1]+" > "+e[2]
-                        l2.appendChild(l2h);
+                        const l2h1 = document.createElement("h3");
+                        l2h1.style.color="#606060"
+                        l2h1.textContent=e[1]+" > "+e[2]
+                        const l2h2 = document.createElement("h3");
+                        l2h2.style.color="#606060"
+                        l2h2.textContent="ID: "+e[8]
+                        const l2h3 = document.createElement("h3");
+                        l2h3.style.color="#606060"
+                        if (e[9] === 0){
+                            l2h3.textContent="Active Flight"
+                        } else {
+                            l2h3.textContent="Removed Flight"
+                        }
+                        l2.appendChild(l2h1);
+                        l2.appendChild(l2h2);
+                        l2.appendChild(l2h3);
                         listItem.appendChild(l1);
                         listItem.appendChild(l2);
                         const button = document.createElement('button');
-                        button.textContent = "Remove Flight";
+                        button.textContent = "Edit Flight";
                         button.style.marginLeft = "10px";
                         button.onclick = function() {
-                            // Redirect to the URL with the flight ID
+                            window
                             window.location.href = `/flight_details/${e[8]}`;
                         };
+                        if (e[9] === 1){
+                            button.style.visibility="hidden"
+                        }
                         listItem.appendChild(button);
                         dataList.appendChild(listItem);
                     }

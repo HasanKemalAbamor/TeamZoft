@@ -124,7 +124,7 @@
         <div class="box">
           <div class="adminpaneltxt">admin panel</div>
           <img src="static/images/logos/FirstLogo.png" alt="Company Logo" />
-            <form action="{{ url_for("addflight") }} "><button class="addFlightsbutton">Add Flight</button></form>
+            <form action="{{ url_for("addflight") }} "><button class="addFlightsbutton">Edit Flight</button></form>
 
             <form action="{{ url_for('viewflights') }}"><button class="viewbutton">View Flights</button></form>
 
@@ -132,8 +132,8 @@
 
         </div>
         <div class="addbox">
-            <form method="post" action="{{ url_for('post_addflight') }}">
-          <div class="addflighttxt">Edit Flight</div>
+            <form method="post" >
+          <div class="addflighttxt">Save</div>
           <input type="text" name="company" placeholder="AIRLINE COMPANY" />
           <input type="text" name="departure" placeholder="DEPARTURE" />
           <input type="text" name="destination" placeholder="DESTINATION" />
@@ -141,6 +141,11 @@
           <input type="time" name="time" />
           <button type="submit" class="addbutton">Add</button>
             </form>
+             <form method="post" action="/flight_details/{{ flight_id }}/delete">
+                 <div class="addflighttxt">
+                     <button type="submit" class="addbutton">Delete</button>
+                 </div>
+             </form>
         </div>
       </div>
     </body>

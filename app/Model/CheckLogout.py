@@ -7,7 +7,6 @@ class CheckUserModel:
 
     @staticmethod
     def check_admin(email):
-        print(email)
         conn = sqlite3.connect(UserModel.DATABASE)
         cursor = conn.cursor()
         cursor.execute("SELECT * FROM User WHERE Email = ?", (email,))
@@ -20,7 +19,6 @@ class CheckUserModel:
 
     @staticmethod
     def check_user(email):
-        print(email)
         conn = sqlite3.connect(UserModel.DATABASE)
         cursor = conn.cursor()
         cursor.execute("SELECT * FROM User WHERE Email = ?", (email,))
