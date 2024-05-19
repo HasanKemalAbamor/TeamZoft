@@ -18,7 +18,10 @@
       }
     </style>
     <body>
-      <button>Pay Now</button>
+        <form action="{{ url_for("payment") }}">
+            <button type="submit">Pay Now</button>
+        </form>
     </body>
   </head>
 </html>
+

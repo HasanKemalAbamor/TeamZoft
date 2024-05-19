@@ -64,8 +64,8 @@
         color: #818181;
         font-size: 24px;
         position: relative;
-        top: 650px;
-        right: 110px;
+        top: 500px;
+        left: 130px;
       }
       .thatplane {
         position: relative;
@@ -85,10 +85,19 @@
           <div class="thatplane">
             <img src="static/images/logos/FirstLogo.png" alt="Company Logo" />
           </div>
+            <form action="{{ url_for("addflight") }}">
+                <button class="addbutton">Add Flight</button>
+            </form>
+            <form action="{{ url_for('viewflights') }}">
+                <button class="addbutton">View Flights</button>
+            </form>
+            <form action="{{ url_for('adminlogin') }}" >
+                <button class="logout">Logout</button>
+            </form>
 
-          <button class="addbutton">Add Flight</button>
-          <button class="viewbutton">View Flights</button>
-          <button class="logout">Logout</button>
+
+
+
         </div>
       </div>
     </body>

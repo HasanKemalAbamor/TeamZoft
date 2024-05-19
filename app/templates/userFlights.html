@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link
+      href="https://fonts.googleapis.com/css?family=Kanit"
+      rel="stylesheet"
+    />
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-widt, initial-scale=1.0" />
+    <title>ViewFlights</title>
+    <style>
+      body {
+        background-color: #272727;
+        display: flex;
+      }
+      .page {
+        width: 1920px;
+        height: 1080px;
+      }
+      .adminpaneltxt {
+        position: relative;
+        font-family: Kanit;
+        color: #818181;
+        text-align: center;
+        font-size: 30px;
+        bottom: -200px;
+      }
+      .box {
+        width: 384px;
+        height: 880px;
+        background-color: #3c3c3c;
+        border-radius: 25px;
+        margin-left: 20px;
+        margin-top: 50px;
+      }
+      .addbox {
+        width: 1190px;
+        height: 880px;
+        background-color: #3c3c3c;
+        border-radius: 25px;
+        margin-left: 700px;
+        margin-top: -880px;
+      }
+      .addFlightsbutton {
+        width: 125px;
+        height: 45px;
+        font-family: Kanit;
+        font-size: large;
+        border: 3px solid #000000;
+        background-color: #d9d9d9;
+        position: relative;
+        right: -120px;
+        top: 100px;
+      }
+      .viewbutton {
+        width: 125px;
+        height: 45px;
+        font-family: Kanit;
+        font-size: large;
+        border: 3px solid #000000;
+        background-color: #d9d9d9;
+        position: relative;
+        right: 10px;
+        top: 160px;
+      }
+      .logoutbutton {
+        background-color: #3c3c3c;
+        font-size: large;
+        border: 3px solid #3c3c3c;
+        font-family: Kanit;
+        color: #818181;
+        font-size: 24px;
+        position: relative;
+          margin-left: 140px;
+          margin-top: 530px;
+      }
+      .filter{
+          display: flex;
+          width: 1190px;
+        height: 200px;
+        background-color: #3c3c3c;
+      }
+      .options{
+          flex: 1;
+          height: 150px;
+          background-color: #3c3c3c;
+      }
+      .addbutton {
+        width: 125px;
+        height: 45px;
+        font-family: Kanit;
+        border: 3px solid #000000;
+        font-size: larger;
+        position: relative;
+      }
+      .list{
+          list-style-type: none;
+          height: 800px;
+          overflow-y: auto;
+      }
+      input {
+        width: 100px;
+        height: 75px;
+        border-radius: 25px;
+        margin: 10px;
+        margin-left: 10px;
+        font-family: Kanit;
+        font-size: large;
+        text-align: center;
+        border: 3px solid #000000;
+        position: relative;
+        background-color: #d9d9d9;
+      }
+    </style>
+    <body>
+      <div class="page">
+        <div class="box">
+          <div class="adminpaneltxt">user panel</div>
+          <img src="static/images/logos/FirstLogo.png" alt="Company Logo" />
+
+            <form action="{{ url_for('userFlights') }}" ><button class="addFlightsbutton">View Flights</button></form>
+
+            <form action="{{ url_for('login') }}" ><button class="logoutbutton">Logout</button></form>
+
+        </div>
+        <div class="addbox">
+            <div >
+                <form method="post" class="filter" action="{{ url_for('userFlights') }}">
+                    <input type="text" class="options" name="departure" placeholder="DEPARTURE" />
+                    <input type="text" class="options" name="destination" placeholder="DESTINATION" />
+                    <input type="date" class="options" name="datelowerboundary" />
+                    <div class="options">
+                        <input type="checkbox" name="sort">
+                        <h3 style="width:100px">Descending</h3>
+                        <button type="submit" class="addbutton">Search</button>
+                    </div>
+                </form>
+            </div>
+            <div>
+                <ul id="data-list" class="list"></ul>
+                <script>
+
+                    window.data = {{ data | tojson }};
+                    let flightList=data
+
+                    const dataList = document.getElementById('data-list');
+
+                    data.forEach(list)
+                    function list(e){
+                        const listItem = document.createElement('li');
+                        listItem.style.display="flex"
+                        listItem.style.height="130px"
+                        listItem.style.color="white";
+                        listItem.style.backgroundColor="#232323";
+                        listItem.style.borderRadius="10px"
+                        listItem.style.padding="3px";
+                        listItem.style.margin="20px"
+                        const l1 = document.createElement("div");
+                        l1.style.flex="1"
+                        const l1h1 = document.createElement("h3");
+                        l1h1.style.color="#606060"
+                        l1h1.textContent=e[0];
+                        const l1h2 = document.createElement("h3");
+                        l1h2.style.color="#606060"
+                        l1h2.textContent=e[5]+"/"+e[4]+"/"+e[3];
+                        const l1h3 = document.createElement("h3");
+                        l1h3.style.color="#606060"
+                        l1h3.textContent=e[6]+":"+e[7];
+                        l1.appendChild(l1h1);
+                        l1.appendChild(l1h2);
+                        l1.appendChild(l1h3);
+                        const l2 = document.createElement("div");
+                        l2.style.flex="1"
+                        const l2h = document.createElement("h3");
+                        l2h.style.color="#606060"
+                        l2h.textContent=e[1]+" > "+e[2]
+                        l2.appendChild(l2h);
+                        listItem.appendChild(l1);
+                        listItem.appendChild(l2);
+                        dataList.appendChild(listItem);
+                        const button = document.createElement('button');
+                        button.textContent = "Select Flight";
+                        button.style.marginLeft = "10px";
+                        button.onclick = function() {
+                            window
+                            window.location.href = `/select_seat`;
+                        };
+                        listItem.appendChild(button);
+                    }
+
+                </script>
+            </div>
+        </div>
+      </div>
+    </body>
+  </head>
+</html>
