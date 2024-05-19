@@ -179,6 +179,14 @@
                         listItem.appendChild(l1);
                         listItem.appendChild(l2);
                         dataList.appendChild(listItem);
+                        const button = document.createElement('button');
+                        button.textContent = "Select Flight";
+                        button.style.marginLeft = "10px";
+                        button.onclick = function() {
+                            window
+                            window.location.href = `/select_seat`;
+                        };
+                        listItem.appendChild(button);
                     }
 
                 </script>

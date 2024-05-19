@@ -136,6 +136,23 @@ def post_userFlights():
     else:
         return redirect("login")
 
+@app.route('/select_seat', methods=['GET'])
+def selectseat():
+    email = request.cookies.get("email")
+    if CheckUserModel.check_user(email):
+        return render_template("seatSelection.html")
+    else:
+        return redirect("adminlogin")
+
+@app.route('/payment', methods=['GET'])
+def payment():
+    email = request.cookies.get("email")
+    if CheckUserModel.check_user(email):
+        print("dsadsasda")
+        return render_template("payment.html")
+    else:
+        return redirect("adminlogin")
+
 
 if __name__ == '__main__':
     app.run(debug=True)
